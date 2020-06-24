@@ -23,6 +23,15 @@ export const reducer = (state, { type, value }) => {
         displayValue: state.displayValue === '0' ? String(value) : state.displayValue + value,
       }
     }
+
+    case 'setValue': {
+      return {
+        ...state,
+        waitingForOperand: false,
+        displayValue: String(value),
+      }
+    }
+
     case 'inputDot': {
       if (state.waitingForOperand) {
         return {

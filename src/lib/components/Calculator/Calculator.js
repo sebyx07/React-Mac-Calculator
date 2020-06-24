@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import _ from 'lodash'
 import CalculatorDisplay from '../CalculatorDisplay'
 import CalculatorKey from '../CalculatorKey'
@@ -6,12 +6,17 @@ import { CalculatorOperations, DigitKeys } from '../../utils/helper'
 import { useCalculator } from '../../hooks'
 import './styles.scss'
 
-const Calculator = () => {
-  const [state, handleClick] = useCalculator()
+const Calculator = ({onChange, showDisplay = true}) => {
+  const [state, handleClick] = useCalculator();
+
+  useEffect(() => {
+    if(!onChange){ return; }
+    onChange(state);
+  }, [state, onChange]);
 
   return (
     <div className="calculator">
-      <CalculatorDisplay value={state.displayValue} />
+      { showDisplay ? <CalculatorDisplay value={state.displayValue} /> : null }
       <div className="calculator-keypad">
         <div className="input-keys">
           <div className="function-keys">

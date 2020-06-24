@@ -29,7 +29,11 @@ export const useCalculator = () => {
     dispatch({ type, value })
   }
 
-  const handleKeyDown = ({ key }) => {
+  const setValue = (value) => {
+    dispatch({type: 'setValue', value});
+  }
+
+  const handleKeyDown = ({ key }, event) => {
     if (key === 'Enter') { key = '=' }
 
     if ((/\d/).test(key)) {
@@ -62,13 +66,13 @@ export const useCalculator = () => {
   }
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
   })
 
-  return [state, handleClick]
+  return [state, handleClick, setValue]
 }
 
